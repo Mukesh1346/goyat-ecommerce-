@@ -105,7 +105,7 @@ const AllDieses = () => {
       <ToastContainer />
       <div className="bread">
         <div className="head">
-          <h4>All Main Category</h4>
+          <h4>All Category</h4>
         </div>
         <div className="links">
           <Link to="/add-maincategory" className="add-new">

@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  getAllWishlistItemsApi,
   removeFromWishlist,
   removeFromWishlistApi,
   removeFromWishlistState,
@@ -24,9 +25,8 @@ import {
   updateStateQuantity,
 } from "@/app/redux/AddtoCart/apiCartSlice";
 import { serverUrl } from "@/app/redux/features/axiosInstance";
-
 const Wishlist = () => {
-  const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+  const {wishlistItems,loading} = useSelector((state) => state.wishlist);
   const { cartItems } = useSelector((state) => state.cart);
   const { items } = useSelector((state) => state.apiCart);
   const { user } = useSelector((state) => state.login);
@@ -73,6 +73,21 @@ const Wishlist = () => {
       toast.error(`"${name}" removed from wishlist`);
     }
   };
+
+  useEffect(() => {
+    if(!user?.email) return;
+    if (user?.email) {
+      dispatch(getAllWishlistItemsApi());
+    }
+  }, [dispatch, user?.email]);
+  
+if (loading) {
+  return (
+    <div className="flex justify-center items-center min-h-[50vh]">
+      <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  );
+}
 
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">

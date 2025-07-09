@@ -34,7 +34,7 @@ const AddFlover = () => {
     try {
       // Send a POST request to add the flover
       const response = await axios.post(
-        "https://api.Delhi Book Store .com/api/create-flover",
+        "https://api.Goyat Trading .com/api/create-flover",
         formData
       ); // Adjust the URL as needed
       toast.success(response.data.message);

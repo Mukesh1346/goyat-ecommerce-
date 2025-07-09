@@ -59,6 +59,7 @@ export default function ProductDetails() {
   const { cartItems } = useSelector((state) => state.cart);
   const { items: apiCartItems } = useSelector((state) => state.apiCart);
   const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
+console.log("wishlistItems:", wishlistItems);
 
   const handleAddToCart = async (product) => {
     const exists = cartItems.some((item) => item.id === product._id);
@@ -101,7 +102,7 @@ export default function ProductDetails() {
 
   const handleAddToWishlist = (_id, title, images, finalPrice, price) => {
     if (user?.email) {
-      const isAlreadyInWishlist = wishlistItems.some(
+      const isAlreadyInWishlist = wishlistItems?.some(
         (item) => item._id === _id
       );
       if (isAlreadyInWishlist) {

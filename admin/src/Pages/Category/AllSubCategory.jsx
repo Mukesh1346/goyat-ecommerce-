@@ -108,7 +108,7 @@ const AllCategory = () => {
       <ToastContainer />
       <div className="bread">
         <div className="head">
-          <h4>All Category</h4>
+          <h4>All Sub Category</h4>
         </div>
         <div className="links">
           <Link to="/add-category" className="add-new">
@@ -121,13 +121,13 @@ const AllCategory = () => {
           >
             Multiple Sub Category <i className="fa-solid fa-plus"></i>
           </Link> */}
-          <Link
+          {/* <Link
             to="/multiple-category-and-subcategory"
             className="add-new"
             style={{ marginLeft: "10px" }}
           >
             Add Multiple Category (Excel) <i className="fa-solid fa-plus"></i>
-          </Link>
+          </Link> */}
         </div>
       </div>
 

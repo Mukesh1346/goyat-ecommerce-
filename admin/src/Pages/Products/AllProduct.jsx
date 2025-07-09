@@ -130,105 +130,85 @@ const AllProduct = () => {
         <div className="head">
           <h4>All Product List</h4>
         </div>
-{/* 
         <div className="links">
-          <Link
-            to="/upload-multiproducts-images"
-            className="add-new"
-            style={{ marginRight: "10px" }}
-          >
-            Upload Images <i className="fa-solid fa-plus"></i>
-          </Link>
           <Link to="/add-product" className="add-new">
             Add New <i className="fa-solid fa-plus"></i>
           </Link>
-          <Link
-            to="/add-multiproduct"
-            className="add-new"
-            style={{ marginLeft: "10px" }}
-          >
-            Add Multiple Products <i className="fa-solid fa-plus"></i>
-          </Link>
-          <Link
-            to="/multiple-subcategory-to-product"
-            className="add-new"
-            style={{ marginLeft: "10px" }}
-          >
-            Multiple product's Subcategory <i className="fa-solid fa-plus"></i>
-          </Link>
-          <Link
-            to="/update-product-currency"
-            className="add-new"
-            style={{ marginLeft: "10px" }}
-          >
-            Update Currency Rate <i className="fa-solid fa-plus"></i>
-          </Link>
-        </div> */}
-
-        
+        </div>
       </div>
-<div className="container my-3">
-  <div className="row g-2">
-    <div className="col-md-4 col-sm-6">
-      <Link to="/upload-multiproducts-images" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-image text-primary fa-lg"></i>
-          <div className="small fw-semibold">Upload Images</div>
-        </div>
-      </Link>
-    </div>
+      {/* <div className="container my-3">
+        <div className="row g-2">
+          <div className="col-md-4 col-sm-6">
+            <Link
+              to="/upload-multiproducts-images"
+              className="text-decoration-none"
+            >
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-image text-primary fa-lg"></i>
+                <div className="small fw-semibold">Upload Images</div>
+              </div>
+            </Link>
+          </div>
 
-    <div className="col-md-4 col-sm-6">
-      <Link to="/add-product" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-plus text-success fa-lg"></i>
-          <div className="small fw-semibold">Add New</div>
-        </div>
-      </Link>
-    </div>
+          <div className="col-md-4 col-sm-6">
+            <Link to="/add-product" className="text-decoration-none">
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-plus text-success fa-lg"></i>
+                <div className="small fw-semibold">Add New</div>
+              </div>
+            </Link>
+          </div>
 
-    <div className="col-md-4 col-sm-6">
-      <Link to="/add-multiproduct" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-boxes-stacked text-warning fa-lg"></i>
-          <div className="small fw-semibold">Add Multiple Products</div>
-        </div>
-      </Link>
-    </div>
+          <div className="col-md-4 col-sm-6">
+            <Link to="/add-multiproduct" className="text-decoration-none">
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-boxes-stacked text-warning fa-lg"></i>
+                <div className="small fw-semibold">Add Multiple Products</div>
+              </div>
+            </Link>
+          </div>
 
-    <div className="col-md-4 col-sm-6">
-      <Link to="/multiple-subcategory-to-product" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-layer-group text-info fa-lg"></i>
-          <div className="small fw-semibold">Multiple Product's Subcategory</div>
-        </div>
-      </Link>
-    </div>
+          <div className="col-md-4 col-sm-6">
+            <Link
+              to="/multiple-subcategory-to-product"
+              className="text-decoration-none"
+            >
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-layer-group text-info fa-lg"></i>
+                <div className="small fw-semibold">
+                  Multiple Product's Subcategory
+                </div>
+              </div>
+            </Link>
+          </div>
 
-    <div className="col-md-4 col-sm-6">
-      <Link to="/update-product-currency" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-dollar-sign text-danger fa-lg "></i>
-          <div className="small fw-semibold">Update Currency Rate</div>
-        </div>
-      </Link>
-    </div>
+          <div className="col-md-4 col-sm-6">
+            <Link
+              to="/update-product-currency"
+              className="text-decoration-none"
+            >
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-dollar-sign text-danger fa-lg "></i>
+                <div className="small fw-semibold">Update Currency Rate</div>
+              </div>
+            </Link>
+          </div>
 
-    <div className="col-md-4 col-sm-6">
-      <Link to="/update-products-stock" className="text-decoration-none">
-        <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
-          <i className="fa-solid fa-box text-secondary fa-lg"></i>
-          <div className="small fw-semibold">Update Stocks</div>
+          <div className="col-md-4 col-sm-6">
+            <Link to="/update-products-stock" className="text-decoration-none">
+              <div className="card h-100 shadow-sm p-2 d-flex align-items-center flex-row gap-3">
+                <i className="fa-solid fa-box text-secondary fa-lg"></i>
+                <div className="small fw-semibold">Update Stocks</div>
+              </div>
+            </Link>
+          </div>
         </div>
-      </Link>
-    </div>
-  </div>
-</div>
+      </div> */}
 
       <Box mb={2} mt={2}>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+        {/* <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
           🔼 Please upload images first before uploading multiple products.
-        </Typography>
+        </Typography> */}
         <Typography variant="body2" gutterBottom>
           Page {currentPage} of {totalPages} | Products on this page:{" "}
           {products.length}
@@ -292,9 +272,11 @@ const AllProduct = () => {
                           ? `${serverURL}/public/image/${product.images[0]}`
                           : fallBackImage
                       }
-                      alt={product?.title?.length > 20
-                      ? product.title.slice(0, 20) + "..."
-                      : product.title}
+                      alt={
+                        product?.title?.length > 20
+                          ? product.title.slice(0, 20) + "..."
+                          : product.title
+                      }
                       style={{ width: "60px", height: "auto" }}
                     />
                   </td>

@@ -104,7 +104,7 @@ const AddSubCategory = () => {
       <ToastContainer />
       <div className="bread">
         <div className="head">
-          <h4>Add Category</h4>
+          <h4>Add Sub Category</h4>
         </div>
         <div className="links">
           <Link to="/all-category" className="add-new">

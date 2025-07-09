@@ -9,24 +9,24 @@
   list-style: none;
   /* z-index: 1000; */
 }
-
 :root {
   --main-bg: #e4e9f7;
   --light-white: #f0f0f0;
   --light-white-p: #6c757d;
-  --color-main: #840adc;
-  --color-main-light: #9810fa;
-  --color-anchor: #0d6efd;
-  --color-blue: #4d8aff;
-  --color-dark-blue: #41a6e0;
-  --color-blu: #840adc;
-  --color-blue-light: #9810fa;
+  --color-main: #4cb051;
+  --color-main-light: #4cb051;
+  --color-anchor: #4cb051;
+  --color-blue: #4cb051;
+  --color-dark-blue: #3da346;
+  --color-blu: #4cb051;
+  --color-blue-light: #4cb051;
   --color-orange: orange;
-  --color-green: #9810fa;
+  --color-green: #4cb051;
   --border-color-1: rgba(101, 119, 134, 0.36);
   --transition-3: all 300ms ease-in;
   --transition-4: all 400ms ease-in;
 }
+
 
 body {
   background: var(--light-white) !important;
