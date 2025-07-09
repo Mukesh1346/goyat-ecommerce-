@@ -266,10 +266,10 @@ const NewArrival = () => {
                   </Link>
 
                   <Link href={`/pages/shop/${product._id}`}>
-                    <h3 className="mt-2 text-sm md:text-md font-normal md:font-semibold line-clamp-1 hover:underline">
+                    <h3 className="mt-2 text-sm md:text-md font-normal md:font-semibold line-clamp-1 ">
                       {product.title}
                     </h3>
-                    <h3 className="mt-1 text-sm text-gray-800 underline font-semibold italic line-clamp-1">
+                    <h3 className="mt-1 text-sm text-gray-800 font-semibold italic line-clamp-1">
                       by {product.author}
                     </h3>
                   </Link>

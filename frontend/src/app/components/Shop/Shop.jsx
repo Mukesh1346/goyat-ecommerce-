@@ -359,11 +359,11 @@ const Shop = () => {
                           padding: "0px 10px",
                           fontSize: "14px",
                         }}
-                        className="my-2 text-sm md:text-md font-normal md:font-bold line-clamp-2 hover:underline rounded-l-0 rounded-r-2xl"
+                        className="my-2 text-sm md:text-md font-normal md:font-bold line-clamp-2 rounded-l-0 rounded-r-2xl"
                       >
                         {product.title}
                       </h3>
-                      <h3 className="mt-1 text-sm text-gray-800 underline font-semibold italic line-clamp-1">
+                      <h3 className="mt-1 text-sm text-gray-800 font-semibold italic line-clamp-1">
                         by {product.author}
                       </h3>
                     </Link>

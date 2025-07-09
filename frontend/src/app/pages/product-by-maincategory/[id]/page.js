@@ -259,7 +259,7 @@ const Page = () => {
               <div>
                 <Link href={`/pages/shop/${product._id}`}>
                   <h3
-                    className="my-2 text-sm md:text-md font-bold hover:underline line-clamp-2"
+                    className="my-2 text-sm md:text-md font-bold line-clamp-2"
                     style={{
                       background:
                         "linear-gradient(90deg, #e9d5ff 0%, #d8b4fe 50%)",
@@ -270,7 +270,7 @@ const Page = () => {
                   >
                     {product.title}
                   </h3>
-                  <h3 className="mt-1 text-sm text-gray-800 underline font-semibold italic line-clamp-1">
+                  <h3 className="mt-1 text-sm text-gray-800  font-semibold italic line-clamp-1">
                     by {product.author}
                   </h3>
                 </Link>
