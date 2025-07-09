@@ -120,8 +120,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <h1>Welcome to Delhi Book Store Admin Panel</h1>
-        <p>Manage your Delhi Book Store store data from here!</p>
+        <h1>Welcome to Goyat Trading Admin Panel</h1>
+        <p>Manage your Goyat Trading store data from here!</p>
       </div>
 
       <div className="dashboard-cards">

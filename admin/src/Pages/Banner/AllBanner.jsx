@@ -102,13 +102,13 @@ const AllSBanner = () => {
           <Link to="/add-banner" className="add-new">
             Add New <i className="fa-solid fa-plus"></i>
           </Link>
-          <Link
+          {/* <Link
             to="/all-level-images"
             className="add-new"
             style={{ marginLeft: "10px" }}
           >
             Manage Other Banners <i className="fa-solid fa-plus"></i>
-          </Link>
+          </Link> */}
         </div>
       </div>
 

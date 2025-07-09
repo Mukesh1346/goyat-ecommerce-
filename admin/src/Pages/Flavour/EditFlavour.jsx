@@ -17,7 +17,7 @@ const EditFlavour = () => {
     const fetchFlavour = async () => {
       try {
         const response = await axios.get(
-          `https://api.Delhi Book Store .com/api/get-single-flover/${id}`
+          `https://api.Goyat Trading .com/api/get-single-flover/${id}`
         );
         console.log(response);
         if (response.data && response.data.data) {
@@ -59,7 +59,7 @@ const EditFlavour = () => {
 
     try {
       const response = await axios.put(
-        `https://api.Delhi Book Store .com/api/update-flover/${id}`,
+        `https://api.Goyat Trading .com/api/update-flover/${id}`,
         updatedData
       );
       toast.success(response.data.message); // Show success message

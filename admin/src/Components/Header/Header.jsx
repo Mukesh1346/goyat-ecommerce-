@@ -34,19 +34,19 @@ const Header = () => {
     { to: "/all-orders", label: "Manage Orders", icon: "fa-solid fa-truck" },
     {
       to: "/all-maincategory",
-      label: "All Main Category",
+      label: "All Category",
       icon: "fa-solid fa-sitemap",
     },
     {
       to: "/all-category",
-      label: "All Category",
+      label: "All Sub Category",
       icon: "fa-solid fa-layer-group",
     },
-    {
-      to: "/all-sub-category",
-      label: "All Sub Category",
-      icon: "fa-solid fa-th-large",
-    },
+    // {
+    //   to: "/all-sub-category",
+    //   label: "All Sub Category",
+    //   icon: "fa-solid fa-th-large",
+    // },
      {
       to: "/all-level-images",
       label: "All Level Images",
@@ -80,7 +80,7 @@ const Header = () => {
       <div className="top-head">
         <div className="right">
           <Link className="text-white text-decoration-none" to="/">
-            <h2>Delhi Book Store Admin Panel</h2>
+            <h2>Goyat Trading Admin Panel</h2>
           </Link>
           <div className="bar" onClick={handletoggleBtn}>
             <i className="fa-solid fa-bars"></i>

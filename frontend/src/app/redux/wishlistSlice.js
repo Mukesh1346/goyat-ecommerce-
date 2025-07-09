@@ -66,7 +66,8 @@ export const getAllWishlistItemsApi = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/wishlist/get-all-wishlists");
-      return response.data?.wishlists?.products;
+      const data=response.data?.wishlists?.products || [];
+      return data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
