@@ -1,9 +1,9 @@
 import Razorpay from "razorpay";
-import {Cart} from "../models/cart.model.js";
+import { Cart } from "../models/cart.model.js";
 import ShortUniqueId from "short-unique-id";
-import {Coupon} from "../models/coupon.model.js";
-import {Order} from "../models/order.model.js";
-import {Product} from "../models/product.model.js";
+import { Coupon } from "../models/coupon.model.js";
+import { Order } from "../models/order.model.js";
+import { Product } from "../models/product.model.js";
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
@@ -25,6 +25,7 @@ const createOrder = async (req, res) => {
       country,
       couponCode,
       paymentMethod,
+      UTRId
     } = req.body || {};
     if (
       !firstName ||
@@ -45,7 +46,7 @@ const createOrder = async (req, res) => {
     }
     const cart = await Cart.findOne({ user: userId });
     console.log("cart", cart.items);
-    
+
     if (!cart) {
       return res.status(400).json({ message: "Cart not found" });
     }
@@ -89,26 +90,26 @@ const createOrder = async (req, res) => {
     }
     totalAmount += shippingCost;
     let razorpayOrder = null;
-    if (paymentMethod === "Online") {
-      try {
-        razorpayOrder = await razorpay.orders.create({
-          amount: Math.round(totalAmount * 100),
-          currency: "INR",
-          receipt: orderId,
-          notes: {
-            userId: userId.toString(),
-            couponCode: couponCode || "",
-          },
-        });
-      } catch (error) {
-        console.error("Error in razorpay order:", error);
-        return res.status(500).json({
-          message:
-            error?.error?.description ||
-            "Internal server error in razorpay order",
-        });
-      }
-    }
+    // if (paymentMethod === "Online") {
+    //   try {
+    //     razorpayOrder = await razorpay.orders.create({
+    //       amount: Math.round(totalAmount * 100),
+    //       currency: "INR",
+    //       receipt: orderId,
+    //       notes: {
+    //         userId: userId.toString(),
+    //         couponCode: couponCode || "",
+    //       },
+    //     });
+    //   } catch (error) {
+    //     console.error("Error in razorpay order:", error);
+    //     return res.status(500).json({
+    //       message:
+    //         error?.error?.description ||
+    //         "Internal server error in razorpay order",
+    //     });
+    //   }
+    // }
 
     await Order.create({
       user: userId,
@@ -122,6 +123,7 @@ const createOrder = async (req, res) => {
       paymentMethod,
       totalAmount,
       items: cart.items,
+      UTRId,
       shippingAddress: {
         firstName,
         lastName,
@@ -135,52 +137,35 @@ const createOrder = async (req, res) => {
       },
       paymentInfo: razorpayOrder
         ? {
-            orderId: razorpayOrder.id,
+            orderId: razorpayOrder?.id,
           }
         : {},
     });
-    // if (paymentMethod === "COD") {
-    //   const cart = await Cart.findOne({ user: req?.user?._id });
-    //   cart.items.length > 0 &&
-    //     cart.items.forEach(async (item) => {
-    //       const product = await Product.findById(item.productId);
-    //       if (product) {
-    //         if(product.stock < item.quantity){
-    //           return res.status(400).json({ message: "Quantity exceeds stock" });
-    //         }
-    //         product.stock -= item.quantity;
-    //         await product.save();
-    //       }
-    //     });
-    //   cart.items = [];
-    //   cart.totalAmount = 0;
-    //   await cart.save();
-    // }
-    if (paymentMethod === "COD") {
-  const cart = await Cart.findOne({ user: req?.user?._id });
+   
+    if (paymentMethod === "COD" || paymentMethod === "Online") {
+      const cart = await Cart.findOne({ user: req?.user?._id });
 
-  for (const item of cart.items) {
-    const product = await Product.findById(item.productId);
-    if (product) {
-      if (product.stock < item.quantity) {
-        return res.status(400).json({ message: "Quantity exceeds stock" });
+      for (const item of cart.items) {
+        const product = await Product.findById(item.productId);
+        if (product) {
+          if (product.stock < item.quantity) {
+            return res.status(400).json({ message: "Quantity exceeds stock" });
+          }
+          product.stock -= item.quantity;
+          await product.save();
+        }
       }
-      product.stock -= item.quantity;
-      await product.save();
-    }
-  }
 
-  cart.items = [];
-  cart.totalAmount = 0;
-  await cart.save();
-}
+      cart.items = [];
+      cart.totalAmount = 0;
+      await cart.save();
+    }
     return res.status(200).json({ message: "Order created successfully" });
   } catch (error) {
     console.log("create order error", error);
     return res.status(500).json({ message: "create order server error" });
   }
 };
-
 
 const verifyPayment = async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
@@ -224,7 +209,9 @@ const verifyPayment = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req?.user?._id }).populate("items.productId");
+    const orders = await Order.find({ user: req?.user?._id }).populate(
+      "items.productId"
+    );
     return res.status(200).json({ orders });
   } catch (error) {
     console.log("get all orders error", error);
@@ -235,7 +222,9 @@ const getAllOrders = async (req, res) => {
 const GetOrderById = async (req, res) => {
   try {
     const { id } = req.params;
-    const order = await Order.findById(id).populate("items.productId").populate({path:"user",select:"-password"});
+    const order = await Order.findById(id)
+      .populate("items.productId")
+      .populate({ path: "user", select: "-password" });
     return res.status(200).json({ message: "Order found", order });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
@@ -247,10 +236,10 @@ const UpdateCheckout = async (req, res) => {
     const { id } = req.params;
     const { orderStatus, paymentStatus } = req.body || {};
     const checkout = await Order.findById(id);
-     if(orderStatus==="Shipped"){
+    if (orderStatus === "Shipped") {
       checkout.shippedAt = Date.now();
     }
-    if(orderStatus === "Delivered"){
+    if (orderStatus === "Delivered") {
       checkout.deliveredAt = Date.now();
     }
     checkout.paymentStatus = paymentStatus ?? checkout.paymentStatus;
@@ -263,7 +252,7 @@ const UpdateCheckout = async (req, res) => {
 
     return res.status(500).json({ message: "Internal server error", error });
   }
-};  
+};
 
 const DeleteOrder = async (req, res) => {
   try {
@@ -276,6 +265,13 @@ const DeleteOrder = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
   }
-}
+};
 
-export  {createOrder,verifyPayment,getAllOrders,GetOrderById,UpdateCheckout,DeleteOrder};
+export {
+  createOrder,
+  verifyPayment,
+  getAllOrders,
+  GetOrderById,
+  UpdateCheckout,
+  DeleteOrder,
+};

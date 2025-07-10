@@ -42,7 +42,7 @@ import ISBNBarcode from "../ISBNBarcode/ISBNBarcode";
 export default function ProductDetails() {
   // Api for show ingle prodict data
 
-  const [activeTab, setActiveTab] = useState("description");
+  const [activeTab, setActiveTab] = useState("details");
   // const [selectedImage, setSelectedImage] = useState(
   //   book.coverImage || "/placeholder.svg"
   // );
@@ -59,7 +59,7 @@ export default function ProductDetails() {
   const { cartItems } = useSelector((state) => state.cart);
   const { items: apiCartItems } = useSelector((state) => state.apiCart);
   const wishlistItems = useSelector((state) => state.wishlist.wishlistItems);
-console.log("wishlistItems:", wishlistItems);
+  console.log("wishlistItems:", wishlistItems);
 
   const handleAddToCart = async (product) => {
     const exists = cartItems.some((item) => item.id === product._id);
@@ -220,7 +220,7 @@ console.log("wishlistItems:", wishlistItems);
         <div className="space-y-4">
           {/* Main Image */}
 
-          <div className="border border-purple-500 rounded-lg overflow-hidden bg-white p-4 flex items-center justify-center">
+          <div className="border border-green-500 rounded-lg overflow-hidden bg-white p-4 flex items-center justify-center h-[440px]">
             <Image
               // src={book1}
               src={
@@ -228,6 +228,7 @@ console.log("wishlistItems:", wishlistItems);
                   ? `${serverUrl}/public/image/${book?.images[0]}`
                   : CallBackImg
               }
+              className="h-[415px] object-cover hover:scale-97 rounded-lg transition-transform duration-300"
               width={500}
               height={500}
               alt={book?.title}
@@ -243,8 +244,8 @@ console.log("wishlistItems:", wishlistItems);
                 onClick={() => setSelectedImage(image || "/placeholder.svg")}
                 className={`border rounded-lg overflow-hidden bg-white p-2 cursor-pointer transition-colors ${
                   selectedImage === image
-                    ? "border-purple-800"
-                    : "border-purple-600 hover:border-purple-800"
+                    ? "border-green-800"
+                    : "border-green-600 hover:border-green-800"
                 }`}
               >
                 <Image
@@ -269,7 +270,7 @@ console.log("wishlistItems:", wishlistItems);
               </div>
               <div className="flex space-x-2">
                 <button
-                  className="p-2 cursor-pointer border border-purple-600 rounded-md hover:bg-purple-100"
+                  className="p-2 cursor-pointer border border-green-600 rounded-md hover:bg-green-100"
                   onClick={() =>
                     handleAddToWishlist(
                       book._id,
@@ -289,10 +290,12 @@ console.log("wishlistItems:", wishlistItems);
                   ) : (
                     <Heart size={20} />
                   )}
-                  <span className="sr-only cursor-pointer">Add to wishlist</span>
+                  <span className="sr-only cursor-pointer">
+                    Add to wishlist
+                  </span>
                 </button>
                 <button
-                  className="p-2 border cursor-pointer border-purple-600 rounded-md hover:bg-purple-100"
+                  className="p-2 border cursor-pointer border-green-600 rounded-md hover:bg-green-100"
                   onClick={handleShare}
                 >
                   <Share2 />
@@ -328,7 +331,7 @@ console.log("wishlistItems:", wishlistItems);
               {book.category.map((cat) => (
                 <span
                   key={cat}
-                  className="px-2.5 py-0.5 bg-purple-100 text-purple-800 text-xs font-medium rounded-full"
+                  className="px-2.5 py-0.5 bg-green-100 text-green-800 text-xs font-medium rounded-full"
                 >
                   {cat}
                 </span>
@@ -339,29 +342,47 @@ console.log("wishlistItems:", wishlistItems);
                 <Link
                   href={`/pages/shop/productBysubcategory/${book?.category?._id}`}
                 >
-                  <span className="px-2.5 py-0.5 bg-purple-100 text-purple-800 text-xs font-medium rounded-full">
+                  <span className="px-2.5 py-0.5 bg-green-100 text-green-800 text-xs font-medium rounded-full">
                     {book?.category?.SubCategoryName}
                   </span>
                 </Link>
               </div>
             )} */}
           </div>
-
-          <hr className="border-purple-400" />
+          <div className=" rounded-lg overflow-hidden">
+            <div className="p-3">
+              <div className="">
+                {/* <h3 className="font-bold">
+                  Description
+                </h3> */}
+                <p>{htmlParser.parse(book.description)}</p>
+                {/* <div className="flex justify-center">
+                  <div className="bg-white p-3 rounded-lg">
+                    <Image src={QR} alt="QR Code" width={180} height={180} />
+                    <ISBNBarcode isbn={book.ISBN13} />
+                  </div>
+                </div> */}
+              </div>
+            </div>
+          </div>
+          <hr className="border-green-400" />
 
           <div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-medium">
-                  prices: ₹{book.price?.toFixed()}
+                prices:{" "}
+                <span className="text-2xl  text-green-600 font-bold">
+                  ₹{book.finalPrice?.toFixed()}
                 </span>
-
+                <span className="font-medium line-through">₹{book.price?.toFixed()}</span>
               </div>
-              <span className="text-[12px] text-red-700">(Inclusive of all taxes)</span>
+              <span className="text-[12px] text-red-700">
+                (Inclusive of all taxes)
+              </span>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              {/* <div className="rounded-lg p-2 border-2  cursor-pointer border-purple-600 ransition-colors">
+              {/* <div className="rounded-lg p-2 border-2  cursor-pointer border-green-600 ransition-colors">
                 <div className="text-center">
                   <div className="font-medium">INR</div>
                   <div className="text-2xl font-bold mt-1">
@@ -369,7 +390,7 @@ console.log("wishlistItems:", wishlistItems);
                   </div>
                 </div>
               </div> */}
-              {/* <div className=" border-2  rounded-lg p-2  cursor-pointer border-purple-600 ransition-colors">
+              {/* <div className=" border-2  rounded-lg p-2  cursor-pointer border-green-600 ransition-colors">
                 <div className="text-center">
                   <div className="font-medium">USD</div>
                   <div className="text-2xl font-bold mt-1">
@@ -377,7 +398,7 @@ console.log("wishlistItems:", wishlistItems);
                   </div>
                 </div>
               </div>
-              <div className="border-2  rounded-lg p-2 cursor-pointer border-purple-600 ransition-colors">
+              <div className="border-2  rounded-lg p-2 cursor-pointer border-green-600 ransition-colors">
                 <div className="text-center">
                   <div className="font-medium">EURO</div>
                   <div className="text-2xl font-bold mt-1">
@@ -422,10 +443,11 @@ console.log("wishlistItems:", wishlistItems);
           {book?.stock > 0 && (
             <div className="flex flex-col space-y-3">
               <button
-                className={`${cartItems.some((item) => item.id === book.id)
-                  ? "w-full bg-black text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer"
-                  : "w-full bg-purple-700 hover:bg-purple-800 text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center"
-                  }`}
+                className={`${
+                  cartItems.some((item) => item.id === book.id)
+                    ? "w-full bg-black text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center cursor-pointer"
+                    : "w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center"
+                }`}
                 onClick={() => handleAddToCart(book)}
               >
                 {cartItems.some((item) => item.id === book.id) ? (
@@ -469,13 +491,13 @@ console.log("wishlistItems:", wishlistItems);
         {/* Right Column - Description and QR Code */}
         <div className="space-y-6">
           <div>
-            <div className="flex border-b border-purple-700">
-              <button
+            <div className="flex border-b border-green-700">
+              {/* <button
                 className="px-4 py-2 font-medium text-sm border-r border-gray-300 text-black hover:green"
                 onClick={() => setActiveTab("description")}
               >
                 Description
-              </button>
+              </button> */}
               {/* <button
                 className="px-4 py-2 font-medium text-sm text-black border-r border-gray-300 hover:green"
                 onClick={() => setActiveTab("highlights")}
@@ -491,45 +513,34 @@ console.log("wishlistItems:", wishlistItems);
             </div>
 
             <div className="mt-4">
-              {activeTab === "description" && (
+              {/* {activeTab === "description" && (
                 <div className="space-y-4">
                   <p className="text-sm leading-relaxed">
                     {htmlParser.parse(book.description)}
                   </p>
                 </div>
-              )}
+              )} */}
 
               {activeTab === "details" && (
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="font-medium">Category:</div>
-                    <div>{book?.language || "N/A"}</div>
+                    <div className="font-medium mb-2">Key Features:</div>
+                    <div>{book?.author || "N/A"}</div>
 
-                    <div className="font-medium">Subcategory:</div>
-                    <div>{book?.language || "N/A"}</div>
-
-                    <div className="font-medium">Product Name:</div>
-                    <div>{book?.language || "N/A"}</div>
-
-                    <div className="font-medium">Quantity:</div>
-                    <div>{book?.language || "N/A"}</div>
+                    <div className="font-medium">Unit:</div>
+                    <div>{book?.pages}</div>
+                    <div className="font-medium">Country of Origin:</div>
+                    <div>{book?.language}</div>
 
                     <div className="font-medium">Brand:</div>
-                    <div>{book?.language || "N/A"}</div>
-
-                    <div className="font-medium">Price:</div>
-                    <div>{book?.language || "N/A"}</div>
-
-                    <div className="font-medium">Description:</div>
-                    <div>{book?.language || "N/A"}</div>
+                    <div>{book?.ISBN || "N/A"}</div>
 
                     <div className="font-medium">Expiry Date:</div>
-                    <div>{book?.language || "N/A"}</div>
+                    <div>{book?.publisher || "N/A"}</div>
 
                     <div className="font-medium">Manufacturer:</div>
-                    <div>{book?.language || "N/A"}</div>
+                    <div>{book?.publicationDate || "N/A"}</div>
                   </div>
-
                 </div>
               )}
 
@@ -540,57 +551,69 @@ console.log("wishlistItems:", wishlistItems);
               )} */}
             </div>
           </div>
+          {/* {activeTab === "description" && (
+          
+          )} */}
 
-          <div className="border border-purple-600 rounded-lg overflow-hidden">
-            <div className="p-3">
-              <div className="">
-                <h3 className="font-bold">
-                  Description
-                </h3>
-                <p>Amul Taaza Toned Milk (Polypack) is pasteurized with a great nutritional value. It can be consumed directly or can be used for preparing tea, coffee, sweets, khoya, curd, buttermilk, ghee etc.</p>
-                {/* <div className="flex justify-center">
-                  <div className="bg-white p-3 rounded-lg">
-                    <Image src={QR} alt="QR Code" width={180} height={180} />
-                    <ISBNBarcode isbn={book.ISBN13} />
-                  </div>
-                </div> */}
-              </div>
-            </div>
-          </div>
-          <div className="mt-4">
-            <h3 className="font-bold text-xl mb-4">Why shop from Grocery?</h3>
-
-            <div className="space-y-4">
-              {/* Feature 1 */}
-              <div className="flex items-start space-x-4">
-                <Image src={fastdelivery} alt="Superfast Delivery" className="w-12 h-12 object-contain" />
-                <div>
-                  <h4 className="font-semibold text-sm">Superfast Delivery</h4>
-                  <p className="text-sm text-gray-600">Get your order delivered to your doorstep at the earliest from dark stores near you.</p>
-                </div>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="flex items-start space-x-4">
-                <Image src={bestprice} alt="Best Prices & Offers" className="w-12 h-12 object-contain" />
-                <div>
-                  <h4 className="font-semibold text-sm">Best Prices & Offers</h4>
-                  <p className="text-sm text-gray-600">Best price destination with offers directly from the manufacturers.</p>
-                </div>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="flex items-start space-x-4">
-                <Image src={wide} alt="Wide Assortment" className="w-12 h-12 object-contain" />
-                <div>
-                  <h4 className="font-semibold text-sm">Wide Assortment</h4>
-                  <p className="text-sm text-gray-600">Choose from 5000+ products across food, personal care, household & other categories.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+         
         </div>
+       
+
       </div>
+       <div className="mt-6 w-full">
+  <h3 className="font-bold text-xl mb-6">
+    Why shop from Goyat Trading?
+  </h3>
+
+  <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* Feature 1 */}
+    <div className="flex items-start space-x-4 w-full">
+      <Image
+        src={fastdelivery}
+        alt="Superfast Delivery"
+        className="w-12 h-12 object-contain"
+      />
+      <div>
+        <h4 className="font-semibold text-sm">Superfast Delivery</h4>
+        <p className="text-sm text-gray-600">
+          Get your order delivered to your doorstep at the earliest from dark
+          stores near you.
+        </p>
+      </div>
+    </div>
+
+    {/* Feature 2 */}
+    <div className="flex items-start space-x-4 w-full">
+      <Image
+        src={bestprice}
+        alt="Best Prices & Offers"
+        className="w-12 h-12 object-contain"
+      />
+      <div>
+        <h4 className="font-semibold text-sm">Best Prices & Offers</h4>
+        <p className="text-sm text-gray-600">
+          Best price destination with offers directly from the manufacturers.
+        </p>
+      </div>
+    </div>
+
+    {/* Feature 3 */}
+    <div className="flex items-start space-x-4 w-full">
+      <Image
+        src={wide}
+        alt="Wide Assortment"
+        className="w-12 h-12 object-contain"
+      />
+      <div>
+        <h4 className="font-semibold text-sm">Wide Assortment</h4>
+        <p className="text-sm text-gray-600">
+          Choose from 5000+ products across food, personal care, household &
+          other categories.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

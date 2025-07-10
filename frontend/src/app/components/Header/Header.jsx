@@ -389,7 +389,7 @@ const Header = () => {
                           transition={{ delay: 0.3 }}
                         >
                           <Link
-                            href={`/pages/product-by-maincategory/${item._id}`}
+                            href={`/pages/categories/${item._id}`}
                           >
                             <p className="font-medium w-full">
                               {item.Parent_name}
@@ -608,13 +608,13 @@ const Header = () => {
             <p className="font-bold text-gray-400">Contact Details</p>
             <ul>
               <li className="mb-3">
-                <Link
+                {/* <Link
                   className="flex gap-2"
                   target="_blank"
                   href="tel:8283863884"
                 >
                   <PhoneCall /> 828-3863-884
-                </Link>
+                </Link> */}
                 <div>
                   <span>You can call anytime front 9am to 6pm.</span>
                 </div>

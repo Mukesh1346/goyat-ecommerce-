@@ -36,7 +36,7 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
     pages: {
-      type: Number,
+      type: String,
     },
     ISBN: {
       type: String,

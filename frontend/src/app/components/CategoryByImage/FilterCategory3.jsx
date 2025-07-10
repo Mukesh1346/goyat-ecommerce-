@@ -36,10 +36,12 @@ const FilterCatgory3 = () => {
               alt={category?.category?.SubCategoryName}
               width={400}
               height={250}
-              className="w-full h-[200px] md:h-[250px] object-fill md:object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-[200px] md:h-[250px] object-fill md:object-fill transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute bottom-0 w-full flex items-center justify-center pb-2">
-              <button className=" green hover:bg-purple-800 text-white font-medium px-4 py-2 border cursor-pointer border-white rounded-full inline-flex items-center gap-2 transition">
+              <button
+                className=" hover:bg-green-800 text-white bg-[#4cb051] font-medium px-4 py-2 border border-white rounded-full inline-flex items-center gap-2 transition cursor-pointer"
+              >
                 Shop Now <MoveRight size={14} />
               </button>
             </div>

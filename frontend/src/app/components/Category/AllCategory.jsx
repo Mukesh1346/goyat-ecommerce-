@@ -4,8 +4,9 @@ import Link from "next/link";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import picture from "../../Images/DowloadImage/kurkure.avif";
-import banner from "../../Images/DBS/banner.webp";
+import banner from "../../Images/DBS/banner.JPG";
 import Image from "next/image";
+import ShopBanner from "../Shop/ShopBanner";
 
 const AllCategory = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,9 @@ const AllCategory = () => {
   return (
     <>
       <div>
-        <Image src={banner} alt="banner-image" />
+        {/* <Image src={banner} alt="banner-image" /> */}
+      <ShopBanner />
+
       </div>
       <div className="max-w-7xl mx-auto py-5 px-4">
         <h2 className="text-4xl font-bold mb-4 text-center green">
@@ -68,8 +71,8 @@ const AllCategory = () => {
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
           {categories.map((cat) => (
-            <Link href={`/pages/product-by-maincategory/${cat._id}`} key={cat._id}>
-              <div
+            <Link href={`/pages/categories/${cat._id}`} key={cat._id}>
+              {/* <div
                 className="border-purple-400 justify-center flex rounded-lg hover:shadow-lg transition"
                 style={{
                   // backgroundColor: categoryColors[cat._id],
@@ -81,7 +84,19 @@ const AllCategory = () => {
               </div>
               <p className="mt-3 text-center font-semibold text-[12px] text-gray-500 md:text-md break-words">
                 {cat.Parent_name}
+              </p> */}
+
+               <div
+              className="shadow-md border border-purple-400 p-4 rounded-lg hover:shadow-lg transition"
+              style={{
+                backgroundColor: categoryColors[cat._id],
+                color: "#333",
+              }}
+            >
+              <p className="text-center font-semibold text-sm md:text-lg break-words">
+                {cat.Parent_name}
               </p>
+            </div>
             </Link>
           ))}
         </div>

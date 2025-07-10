@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Image1 from "../../Images/DBS/BANNER3.jpg";
+import Image1 from "../../Images/DBS/BANNER3.png";
 const ShopBanner = () => {
   return (
     <>
