@@ -364,7 +364,7 @@ const Shop = () => {
                         {product.title}
                       </h3>
                       <h3 className="mt-1 text-sm text-gray-800 font-semibold italic line-clamp-1">
-                        by {product.author}
+                      {product.pages}
                       </h3>
                     </Link>
                     <p className="text-sm text-gray-700 leading-relaxed tracking-wide line-clamp-3">
@@ -563,7 +563,7 @@ const Shop = () => {
                       {product.title}
                     </h3>
                     <h3 className="mt-1 text-sm text-gray-800 underline font-semibold italic line-clamp-1">
-                      by {product.author}
+                    {product.pages}
                     </h3>
                   </Link>
                   <p className="text-sm text-gray-700 leading-relaxed tracking-wide line-clamp-3">

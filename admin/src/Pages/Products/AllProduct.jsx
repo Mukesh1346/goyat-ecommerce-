@@ -232,8 +232,8 @@ const AllProduct = () => {
               <th>S No.</th>
               <th>Title</th>
               <th>Image</th>
-              <th>Author</th>
-              <th>ISBN</th>
+              <th>Key Features</th>
+              <th>Brand</th>
               <th>New Arrival</th>
               <th>Featured</th>
               <th>Best Selling</th>

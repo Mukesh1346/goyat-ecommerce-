@@ -12,6 +12,8 @@ import { createOrder } from "@/app/redux/features/order/orderSlice";
 import toast from "react-hot-toast";
 import CallBackImg from "../../Images/DBS/DBSLOGO.jpg";
 import { serverUrl } from "@/app/redux/features/axiosInstance";
+import UPIQrDisplay from "@/app/components/Payment/UPIQrDisplay";
+import Modal from "@/app/components/Payment/Model";
 
 export default function Page() {
   const router = useRouter();
@@ -26,33 +28,18 @@ export default function Page() {
     zipCode: "",
     country: "India",
     paymentMethod: "",
+    UTRId: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
   const user = useSelector((state) => state.login.user);
   const { items } = useSelector((state) => state.apiCart);
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const appiedCoupon = useSelector((state) => state.cart.appliedCoupon);
   const couponDiscount = appiedCoupon?.discount;
-console.log("appiedCoupon:", appiedCoupon);
-
-  // const cartItems = [
-  //   {
-  //     id: 1,
-  //     name: "Love Book",
-  //     price: 7995,
-  //     quantity: 1,
-  //     image: book1,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Science Book",
-  //     price: 7995,
-  //     quantity: 1,
-  //     image: book2,
-  //   },
-  // ];
+  console.log("appiedCoupon:", appiedCoupon);
 
   let cartItemsValue = [];
   if (user?.email) {
@@ -61,21 +48,23 @@ console.log("appiedCoupon:", appiedCoupon);
     cartItemsValue = cartItems;
   }
 
-  const subtotal = cartItemsValue && cartItemsValue.length > 0 
-  ? cartItemsValue.reduce((total, item) => {
-    const price = item?.productId?.finalPrice ?? item.price;
-    console.log("price:", price);
+  const subtotal =
+    cartItemsValue && cartItemsValue.length > 0
+      ? cartItemsValue.reduce((total, item) => {
+          const price = item?.productId?.finalPrice ?? item.price;
+          console.log("price:", price);
 
-    return total + price * item.quantity;
-  }, 0) : 0
-console.log("couponDiscount:", couponDiscount);
+          return total + price * item.quantity;
+        }, 0)
+      : 0;
+  console.log("couponDiscount:", couponDiscount);
 
-    const adjustedCouponDiscount =
-  couponDiscount < 100 ? (subtotal * couponDiscount) / 100 : couponDiscount;
-console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
+  const adjustedCouponDiscount =
+    couponDiscount < 100 ? (subtotal * couponDiscount) / 100 : couponDiscount;
+  console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
 
-  const tax = subtotal * 0.08;
-  const shipping = subtotal > 500 ? 0 : 50;
+  // const tax = subtotal * 0.08;
+  const shipping = subtotal == 0 ? 0 : subtotal > 500 ? 0 : 50;
   const total = subtotal + shipping - Number(adjustedCouponDiscount ?? 0);
 
   const handleChange = (e) => {
@@ -111,6 +100,7 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
     if (!formData.city.trim()) newErrors.city = "City is required";
     if (!formData.state.trim()) newErrors.state = "State is required";
     if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP code is required";
+    if(!formData.UTRId.trim()) newErrors.UTRId = "UTR ID is required";
     if (!formData.paymentMethod)
       newErrors.paymentMethod = "Payment method is required";
     setErrors(newErrors);
@@ -121,13 +111,18 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
     e.preventDefault();
 
     if (!validateForm()) return;
+    setShowScanner(true);
+  };
 
-    setIsSubmitting(true);
-
+  const handleCreateOrder = async () => {
+    const loader = toast.loading("Processing your order...");
     try {
       await dispatch(createOrder(formData)).unwrap();
-      router.push("/pages/checkout/success");
+      toast.dismiss(loader);
+      toast.success("Order placed successfully!");
+      router.push("/pages/userprofile");
     } catch (error) {
+      toast.dismiss(loader);
       console.log("Checkout failed:", error);
       toast.error(error.message || "Something went wrong during checkout.");
     } finally {
@@ -358,9 +353,9 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
                       className="w-full px-4 py-2 border border-gray-400 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none"
                     >
                       <option value="India">India</option>
-                      <option value="Canada">Canada</option>
+                      {/* <option value="Canada">Canada</option>
                       <option value="United Kingdom">United Kingdom</option>
-                      <option value="Australia">Australia</option>
+                      <option value="Australia">Australia</option> */}
                     </select>
                   </div>
                 </div>
@@ -381,7 +376,7 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
                     className="w-full px-4 py-2 border border-gray-400 rounded-md focus:ring-2 focus:ring-purple-600 focus:outline-none"
                   >
                     <option value="">Select Payment Method</option>
-                    <option value="COD">Cash on Delivery (COD)</option>
+                    {/* <option value="COD">Cash on Delivery (COD)</option> */}
                     <option value="Online">Online Payment</option>
                   </select>
                 </div>
@@ -390,8 +385,36 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full green hover:bg-purple-800 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full hover:bg-green-500  bg-green-600 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
+                {showScanner && (
+                  <Modal
+                    isOpen={showScanner}
+                    onSubmit={() => {
+                      handleCreateOrder();
+                    }}
+                    onClose={() => setShowScanner(false)}
+                  >
+                    <>
+                      <UPIQrDisplay amount={Math.round(total)} />
+                      <p className="text-sm text-gray-600 mt-4">
+                       Enter your UTR Id
+                      </p>
+                      <input
+                        type="text"
+                        placeholder="Enter UPI ID"
+                        className="mt-4 w-full px-4 py-2 border border-gray-400 rounded-md focus:ring-2 focus:ring-green-600 focus:outline-none text-black"
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            UTRId: e.target.value,
+                          }))
+                        }
+                        value={formData.UTRId}
+                      />
+                    </>
+                  </Modal>
+                )}
                 {isSubmitting ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -447,7 +470,10 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
                         Quantity: {item.quantity}
                       </p>
                       <p className="text-gray-900 font-medium mt-1">
-                        ₹{(item.price ?? item.productId?.price)?.toFixed(2)}
+                        ₹
+                        {(
+                          item.finalPrice ?? item.productId?.finalPrice
+                        )?.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -466,18 +492,17 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
                   <span className="text-gray-900 font-medium">
                     ₹{shipping?.toFixed(2)}
                   </span>
-                 
                 </div>
-                 {couponDiscount > 0 && (
-                <div className="flex justify-between text-red-600 ">
-                  <span>Coupon Discount</span>
-                  <span>
-                    -{`${couponDiscount > 100 ? "₹" : ""}`}
-                    {couponDiscount}
-                    {couponDiscount < 100 ? "%" : ""}
-                  </span>
-                </div>
-              )}
+                {couponDiscount > 0 && (
+                  <div className="flex justify-between text-red-600 ">
+                    <span>Coupon Discount</span>
+                    <span>
+                      -{`${couponDiscount > 100 ? "₹" : ""}`}
+                      {couponDiscount}
+                      {couponDiscount < 100 ? "%" : ""}
+                    </span>
+                  </div>
+                )}
                 {/* <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Tax</span>
                   <span className="text-gray-900 font-medium">
@@ -485,9 +510,8 @@ console.log("adjustedCouponDiscount:", adjustedCouponDiscount);
                   </span>
                 </div> */}
                 <div className="flex justify-between pt-2 border-t border-gray-200 text-base font-medium">
-                  
                   <span className="text-gray-900">Total</span>
-                  <span className="text-gray-900">₹{total.toFixed(2)}</span>
+                  <span className="text-gray-900">₹{Math.round(total)}</span>
                 </div>
               </div>
 

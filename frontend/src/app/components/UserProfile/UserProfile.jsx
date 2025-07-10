@@ -485,7 +485,7 @@ if(loading || !user){
                             </div>
                             <div className="text-right">
                               <p className="font-bold text-lg">
-                                ₹{order?.totalAmount}
+                                ₹{Math.round(order?.totalAmount)}
                               </p>
                               <span className="inline-block px-3 py-1 rounded-full text-sm bg-green-100 text-green-800">
                                 {order?.orderStatus}
@@ -597,11 +597,11 @@ if(loading || !user){
                         >
                           <div
                             className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center z-10 ${
-                              completed ? "green" : "bg-gray-200"
+                              completed ? "bg-green-500" : "bg-gray-200"
                             }`}
                           >
                             {completed && (
-                              <div className="h-3 w-3 bg-white rounded-full" />
+                              <div className="h-3 w-3  rounded-full" />
                             )}
                           </div>
                           <div className="ml-4">
@@ -704,7 +704,7 @@ if(loading || !user){
                     <div className="flex justify-between pt-2 border-t border-gray-200">
                       <span className="font-semibold">Total</span>
                       <span className="font-semibold">
-                        {selectedOrder?.totalAmount}
+                       Rs. {Math.round(selectedOrder?.totalAmount)}
                       </span>
                     </div>
                   </div>

@@ -47,11 +47,11 @@ const FilterCatgory1 = () => {
               height={250}
               className="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-105"
             />
-            <div className="absolute bottom-0 w-full flex items-center justify-center pb-2">
+            {/* <div className="absolute bottom-0 w-full flex items-center justify-center pb-2">
               <button style={{backgroundColor:"#4cb051"}} className="hover:bg-purple-800 text-white font-medium px-4 py-2 border border-white rounded-full inline-flex items-center gap-2 transition cursor-pointer">
                 Shop Now <MoveRight size={14} />
               </button>
-            </div>
+            </div> */}
           </motion.div>
         </Link>
       ))}

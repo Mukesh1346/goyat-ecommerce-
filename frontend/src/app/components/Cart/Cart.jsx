@@ -312,7 +312,7 @@ export default function Cart() {
             Start exploring and add items you like!
           </p>
           <Link href="/">
-            <button className="mt-4 black-btn">Contineu to Shopping</button>
+            <button className="mt-4 black-btn">Continue Shopping</button>
           </Link>
         </div>
       </div>

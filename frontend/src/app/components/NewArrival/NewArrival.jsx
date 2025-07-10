@@ -270,7 +270,7 @@ const NewArrival = () => {
                       {product.title}
                     </h3>
                     <h3 className="mt-1 text-sm text-gray-800 font-semibold italic line-clamp-1">
-                      by {product.author}
+                    {product.pages}
                     </h3>
                   </Link>
 

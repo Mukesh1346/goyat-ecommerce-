@@ -28,7 +28,7 @@ const EditProduct = () => {
     featuredBooks: "",
     bestSellingBooks: "",
     author: "",
-    pages: 0,
+    pages: "",
     ISBN: "",
     publisher: "",
     publicationDate: "",
@@ -173,7 +173,7 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">Author*</label>
+            <label className="form-label">Key Features*</label>
             <input
               type="text"
               name="author"
@@ -185,9 +185,9 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">Pages*</label>
+            <label className="form-label">Unit*</label>
             <input
-              type="number"
+              type="text"
               name="pages"
               className="form-control"
               value={formData.pages}
@@ -197,7 +197,7 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">ISBN*</label>
+            <label className="form-label">Brand*</label>
             <input
               type="text"
               name="ISBN"
@@ -229,7 +229,7 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">Publisher*</label>
+            <label className="form-label">Expiry Date*</label>
             <input
               type="text"
               name="publisher"
@@ -241,7 +241,7 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">Publication Date*</label>
+            <label className="form-label">Manufacturer*</label>
             <input
               type="text"
               name="publicationDate"
@@ -253,7 +253,7 @@ const EditProduct = () => {
           </div>
 
           <div className="col-md-3">
-            <label className="form-label">Language*</label>
+            <label className="form-label">Country of Origin*</label>
             <input
               type="text"
               name="language"

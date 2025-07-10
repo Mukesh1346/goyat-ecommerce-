@@ -65,7 +65,7 @@ const HomeBanner = () => {
                       src={`${serverUrl}/public/image/${slide.bannerImage}`}
                       alt={"banners"}
                       fill
-                      className="object-fill md:object-cover"
+                      className="object-fill"
                       priority
                     />
                   </motion.div>
