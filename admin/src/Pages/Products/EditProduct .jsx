@@ -1,10 +1,11 @@
+// ... All imports same
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axiosInstance from "../../services/FetchNodeServices.js";
-import { fileLimit } from "../../services/fileLimit.js";
+import axiosInstance from "../../services/FetchNodeServices";
+import { fileLimit } from "../../services/fileLimit";
 import "./product.css";
 
 const EditProduct = () => {
@@ -18,15 +19,16 @@ const EditProduct = () => {
   const [formData, setFormData] = useState({
     title: "",
     images: [],
+    mainCategory: "",
     category: "",
     price: 0,
     discount: 0,
-    // stock: 0,
     finalPrice: 0,
     description: "",
-    newArrival: "",
-    featuredBooks: "",
-    bestSellingBooks: "",
+    details: "",
+    newArrival: false,
+    featuredBooks: false,
+    bestSellingBooks: false,
     author: "",
     pages: "",
     ISBN: "",
@@ -36,59 +38,67 @@ const EditProduct = () => {
   });
 
   useEffect(() => {
-    fetchCategory();
+    fetchMainCategory();
+    fetchAllSubcategories();
     if (productId) fetchProductDetails(productId);
   }, [productId]);
 
-  const fetchCategory = async () => {
+  const fetchMainCategory = async () => {
     try {
-      const res = await axiosInstance.get("/api/v1/category/get-all-categories");
+      const res = await axiosInstance.get("/api/v1/mainCategory/get-all-mainCategories");
       setCategoryList(res?.data || []);
     } catch (err) {
-      toast.error("Failed to fetch categories.");
+      toast.error("Failed to fetch main categories.");
     }
   };
 
-  const fetchProductDetails = async (id) => {
+  const fetchAllSubcategories = async () => {
     try {
-      const res = await axiosInstance.get(`/api/v1/product/get-product/${id}`);
-  
-      if (res?.data) {
-        
-        setFormData( res.data.product );
-        setFormData((prev) => ({ ...prev, category: res.data.product?.category?._id }));
-        
-      }
+      const res = await axiosInstance.get("/api/v1/category/get-all-categories");
+      setSubcategoryList(res?.data || []);
     } catch (err) {
-      toast.error("Failed to load product.");
+      toast.error("Failed to fetch subcategories.");
     }
   };
- 
-  // const fetchSubcategories = async (categoryId) => {
-  //   try {
-  //     const res = await axiosInstance.get(`/api/v1/category/get-subcategories-by-category/${categoryId}`);
-  //     setSubcategoryList(res?.data?.data || []);
-  //   } catch (err) {
-  //     toast.error("Failed to fetch subcategories.");
-  //   }
-  // };
+
+ const fetchProductDetails = async (id) => {
+  try {
+    const res = await axiosInstance.get(`/api/v1/product/get-product/${id}`);
+    const product = res?.data?.product;
+    if (product) {
+      setFormData({
+        ...product,
+        mainCategory: product?.mainCategory|| "",
+        category: product?.category._id || "",
+      });
+    }
+  } catch (err) {
+    toast.error("Failed to load product.");
+  }
+};
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleJoditChange = (value) => {
-    setFormData((prev) => ({ ...prev, description: value }));
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     if (name === "images") {
       setFormData((prev) => ({ ...prev, images: [...files] }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }));
     }
+  };
+
+  const handleJoditChange = (value) => {
+    setFormData((prev) => ({ ...prev, description: value }));
+  };
+
+  const handleJoditDetailsChange = (value) => {
+    setFormData((prev) => ({ ...prev, details: value }));
   };
 
   useEffect(() => {
@@ -100,10 +110,8 @@ const EditProduct = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!formData.category) {
-      toast.error("Category is required");
-      return;
-    }
+    if (!formData.category) return toast.error("Subcategory is required");
+    if (!fileLimit(formData?.coverImage)) return;
 
     if (formData.images && Array.isArray(formData.images)) {
       for (const image of formData.images) {
@@ -124,15 +132,9 @@ const EditProduct = () => {
     });
 
     try {
-      const response = await axiosInstance.put(
-        `/api/v1/product/update-product/${productId}`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axiosInstance.put(`/api/v1/product/update-product/${productId}`, payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       if (response.status === 200) {
         toast.success("Product updated successfully");
         navigate("/all-products");
@@ -162,117 +164,49 @@ const EditProduct = () => {
         <form className="row g-3 mt-2" onSubmit={handleSubmit}>
           <div className="col-md-3">
             <label className="form-label">Product Name*</label>
-            <input
-              type="text"
-              name="title"
-              className="form-control"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="col-md-3">
-            <label className="form-label">Key Features*</label>
-            <input
-              type="text"
-              name="author"
-              className="form-control"
-              value={formData.author}
-              onChange={handleChange}
-              required
-            />
+            <input type="text" name="title" className="form-control" value={formData.title} onChange={handleChange} required />
           </div>
 
           <div className="col-md-3">
             <label className="form-label">Unit*</label>
-            <input
-              type="text"
-              name="pages"
-              className="form-control"
-              value={formData.pages}
-              onChange={handleChange}
-              required
-            />
+            <input type="text" name="pages" className="form-control" value={formData.pages} onChange={handleChange} required />
           </div>
 
-          <div className="col-md-3">
-            <label className="form-label">Brand*</label>
-            <input
-              type="text"
-              name="ISBN"
-              className="form-control"
-              value={formData.ISBN}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="col-md-3">
-            <label className="form-label">Category*</label>
-            <select
-              name="category"
-              className="form-control"
-              value={formData.category}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              required
-            >
+          <div className="col-md-6">
+            <label className="form-label">Select Category</label>
+            <select name="mainCategory" required className="form-select" onChange={handleChange} value={formData.mainCategory}>
               <option value="">Select Category</option>
               {categoryList.map((cat) => (
                 <option key={cat._id} value={cat._id}>
-                  {cat.SubCategoryName}
+                  {cat?.Parent_name}
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="col-md-3">
-            <label className="form-label">Expiry Date*</label>
-            <input
-              type="text"
-              name="publisher"
-              className="form-control"
-              value={formData.publisher}
-              onChange={handleChange}
+          <div className="col-md-6">
+            <label className="form-label">Select Sub Category</label>
+            <select
+              name="category"
               required
-            />
-          </div>
-
-          <div className="col-md-3">
-            <label className="form-label">Manufacturer*</label>
-            <input
-              type="text"
-              name="publicationDate"
-              className="form-control"
-              value={formData.publicationDate}
+              className="form-select"
               onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="col-md-3">
-            <label className="form-label">Country of Origin*</label>
-            <input
-              type="text"
-              name="language"
-              className="form-control"
-              value={formData.language}
-              onChange={handleChange}
-              required
-            />
+              value={formData.category}
+            >
+              <option value="">Select Sub Category</option>
+              {subcategoryList
+                .filter((cat) => cat?.Parent_name?._id === formData.mainCategory)
+                .map((subcat) => (
+                  <option key={subcat._id} value={subcat._id}>
+                    {subcat.SubCategoryName}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div className="col-md-3">
             <label className="form-label">Images</label>
-            <input
-              type="file"
-              multiple
-              name="images"
-              className="form-control"
-              onChange={handleFileChange}
-            />
+            <input type="file" multiple name="images" className="form-control" onChange={handleFileChange} />
           </div>
 
           <div className="col-md-12">
@@ -280,17 +214,15 @@ const EditProduct = () => {
             <JoditEditor value={formData.description} onChange={handleJoditChange} />
           </div>
 
+          <div className="col-md-12">
+            <label className="form-label">Product Details*</label>
+            <JoditEditor value={formData.details} onChange={handleJoditDetailsChange} />
+          </div>
+
           <div className="row">
             <div className="col-md-2">
               <label className="form-label">Price*</label>
-              <input
-                type="number"
-                name="price"
-                className="form-control"
-                value={formData.price}
-                onChange={handleChange}
-                required
-              />
+              <input type="number" name="price" className="form-control" value={formData.price} onChange={handleChange} required />
             </div>
 
             <div className="col-md-2">
@@ -309,82 +241,30 @@ const EditProduct = () => {
 
             <div className="col-md-2">
               <label className="form-label">Final Price*</label>
-              <input
-                type="number"
-                name="finalPrice"
-                className="form-control"
-                value={formData.finalPrice}
-                readOnly
-              />
+              <input type="number" name="finalPrice" className="form-control" value={formData.finalPrice} readOnly />
             </div>
-
-            {/* <div className="col-md-2">
-              <label className="form-label">Stock</label>
-              <input
-                type="number"
-                name="stock"
-                className="form-control"
-                value={formData.stock}
-                onChange={handleChange}
-              />
-            </div> */}
           </div>
-<div className="row mt-3">
-  <div className="col-md-4">
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        id="newArrival"
-        checked={formData.newArrival}
-        onChange={(e) =>
-          setFormData({ ...formData, newArrival: e.target.checked })
-        }
-      />
-      <label className="form-check-label" htmlFor="newArrival">
-        New Arrival
-      </label>
-    </div>
-  </div>
-  <div className="col-md-4">
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        id="featuredBooks"
-        checked={formData.featuredBooks}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            featuredBooks: e.target.checked,
-          })
-        }
-      />
-      <label className="form-check-label" htmlFor="featuredBooks">
-        Featured Books
-      </label>
-    </div>
-  </div>
-  <div className="col-md-4">
-    <div className="form-check">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        id="bestSellingBooks"
-        checked={formData.bestSellingBooks }
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            bestSellingBooks: e.target.checked,
-          })
-        }
-      />
-      <label className="form-check-label" htmlFor="bestSellingBooks">
-        Best Selling Books
-      </label>
-    </div>
-  </div>
-</div>
+
+          <div className="row mt-3">
+            <div className="col-md-4">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="newArrival" name="newArrival" checked={formData.newArrival} onChange={handleChange} />
+                <label className="form-check-label" htmlFor="newArrival">New Arrival</label>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="featuredBooks" name="featuredBooks" checked={formData.featuredBooks} onChange={handleChange} />
+                <label className="form-check-label" htmlFor="featuredBooks">Featured Product</label>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-check">
+                <input type="checkbox" className="form-check-input" id="bestSellingBooks" name="bestSellingBooks" checked={formData.bestSellingBooks} onChange={handleChange} />
+                <label className="form-check-label" htmlFor="bestSellingBooks">Best Selling</label>
+              </div>
+            </div>
+          </div>
 
           <div className="col-md-12 mt-4 text-center">
             <button type="submit" className="btn" disabled={isLoading}>

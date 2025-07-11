@@ -130,7 +130,7 @@ const AllDieses = () => {
             <tr>
               <th scope="col">Sr.No.</th>
               <th scope="col">Name</th>
-              {/* <th scope="col">Image</th> */}
+              <th scope="col">Image</th>
               {/* <th scope="col">Show in Collection</th> */}
               <th scope="col">Edit</th>
               <th scope="col">Delete</th>
@@ -142,13 +142,13 @@ const AllDieses = () => {
                 <tr key={category._id}>
                   <th scope="row">{index + 1}</th>
                   <td>{category?.Parent_name}</td>
-                  {/* <td>
+                  <td>
                     <img
-                      src={`${category?.categoryImage}`}
-                      alt={category?.categoryName}
+                      src={`${category?.mainCategoryImage ? serverURL + "/public/image/" + category?.mainCategoryImage : "https://via.placeholder.com/50"}`}
+                      alt={category?.Parent_name}
                       style={{ width: "50px", height: "50px" }}
                     />
-                  </td> */}
+                  </td>
                   {/* <td>
                     <input
                       type="checkbox"

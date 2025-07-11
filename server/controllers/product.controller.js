@@ -30,6 +30,7 @@ const createProduct = async (req, res) => {
       price,
       discount,
       category,
+      mainCategory
       // stock,
     } = req.body || {};
     const errorMessages = [];
@@ -38,13 +39,13 @@ const createProduct = async (req, res) => {
       errorMessages.push("image is required");
     if (!description) errorMessages.push("description is required");
     // if (!highlights) errorMessages.push("highlights is required");
-    // if (!details) errorMessages.push("details is required");
-    if (!author) errorMessages.push("author is required");
-    if (!pages) errorMessages.push("pages is required");
-    if (!ISBN) errorMessages.push("ISBN is required");
-    if (!publisher) errorMessages.push("publisher is required");
-    if (!publicationDate) errorMessages.push("publicationDate is required");
-    if (!language) errorMessages.push("language is required");
+    if (!details) errorMessages.push("details is required");
+    // if (!author) errorMessages.push("author is required");
+    // if (!pages) errorMessages.push("pages is required");
+    // if (!ISBN) errorMessages.push("ISBN is required");
+    // if (!publisher) errorMessages.push("publisher is required");
+    // if (!publicationDate) errorMessages.push("publicationDate is required");
+    // if (!language) errorMessages.push("language is required");
     // if (!priceInDollors) errorMessages.push("priceInDollors is required");
     // if (!priceInEuros) errorMessages.push("priceInEuros is required");
     if (!price) errorMessages.push("price is required");
@@ -73,13 +74,13 @@ const createProduct = async (req, res) => {
       title,
       description,
       // highlights,
-      // details,
-      author,
+      details,
+      // author,
       pages,
-      ISBN,
-      publisher,
-      publicationDate,
-      language,
+      // ISBN,
+      // publisher,
+      // publicationDate,
+      // language,
       newArrival: newArrivalBool,
       featuredBooks: featuredBooksBool,
       bestSellingBooks: bestSellingBooksBool,
@@ -91,6 +92,7 @@ const createProduct = async (req, res) => {
       // stock,
       images,
       finalPrice,
+      mainCategory
     });
 
     return res.status(201).json({ message: "product created", product });
@@ -250,14 +252,14 @@ const updateProduct = async (req, res) => {
     }
     product.title = title ?? product.title;
     product.description = description ?? product.description;
-    product.highlights = highlights ?? product.highlights;
+    // product.highlights = highlights ?? product.highlights;
     product.details = details ?? product.details;
-    product.author = author ?? product.author;
+    // product.author = author ?? product.author;
     product.pages = pages ?? product.pages;
-    product.ISBN = ISBN ?? product.ISBN;
-    product.publisher = publisher ?? product.publisher;
-    product.publicationDate = publicationDate ?? product.publicationDate;
-    product.language = language ?? product.language;
+    // product.ISBN = ISBN ?? product.ISBN;
+    // product.publisher = publisher ?? product.publisher;
+    // product.publicationDate = publicationDate ?? product.publicationDate;
+    // product.language = language ?? product.language;
     if ("newArrival" in req.body) {
       product.newArrival = req.body.newArrival === "true";
     }
@@ -269,10 +271,7 @@ const updateProduct = async (req, res) => {
     if ("bestSellingBooks" in req.body) {
       product.bestSellingBooks = req.body.bestSellingBooks === "true";
     }
-    console.log("req.body.stock", req.body);
-    console.log("productprice", product.price, price);
-    console.log("value", price ?? product.price);
-
+ 
     product.priceInDollors = priceInDollors ?? product.priceInDollors;
     product.priceInEuros = priceInEuros ?? product.priceInEuros;
     product.price = price ?? product.price;
