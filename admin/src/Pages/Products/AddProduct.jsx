@@ -18,6 +18,7 @@ const AddProduct = () => {
   const [formData, setFormData] = useState({
     title: "",
     images: [],
+    mainCategory: "",
     category: "",
     price: 0,
     discount: 0,
@@ -33,18 +34,35 @@ const AddProduct = () => {
     publisher: "",
     publicationDate: "",
     language: "",
+    details: "",
   });
 
   const navigate = useNavigate();
 
-  const fetchCategory = async () => {
+  const fetchSubCategory = async () => {
     try {
       const response = await axiosInstance.get(
         "/api/v1/category/get-all-categories"
       );
       if (response?.status === 200) {
-        console.log("response", response.data);
+        console.log("sub category response", response.data);
 
+        setSubcategoryList(response.data);
+      }
+    } catch (error) {
+      toast.error(
+        error.response
+          ? error.response.data.message
+          : "Error fetching Category data"
+      );
+    }
+  };
+  const fetchCategory = async () => {
+    try {
+      const response = await axiosInstance.get(
+        "/api/v1/mainCategory/get-all-mainCategories"
+      );
+      if (response?.status === 200) {
         setCategoryList(response.data);
       }
     } catch (error) {
@@ -57,6 +75,7 @@ const AddProduct = () => {
   };
 
   useEffect(() => {
+    fetchSubCategory();
     fetchCategory();
   }, []);
 
@@ -65,7 +84,7 @@ const AddProduct = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCategoryChange = async (e) => {
+  const handleSubCategoryChange = async (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     try {
@@ -82,6 +101,9 @@ const AddProduct = () => {
   };
   const handleJoditChange = (newValue) => {
     setFormData((prev) => ({ ...prev, description: newValue }));
+  };
+  const handleJoditDetailsChange = (newValue) => {
+    setFormData((prev) => ({ ...prev, details: newValue }));
   };
 
   const handleSubmit = async (e) => {
@@ -187,24 +209,8 @@ const AddProduct = () => {
               required
             />
           </div>
+
           {/* <div className="col-md-3">
-            <label className="form-label">Select Category</label>
-            <select
-              name="categoryId"
-              id=""
-              required
-              onChange={handleCategoryChange}
-              value={formData.categoryId}
-            >
-              <option value="">Select Category</option>
-              {categoryList.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.categoryName}
-                </option>
-              ))}
-            </select>
-          </div> */}
-          <div className="col-md-3">
             <label className="form-label">Key Features*</label>
             <input
               type="text"
@@ -214,7 +220,7 @@ const AddProduct = () => {
               onChange={handleChange}
               required
             />
-          </div>
+          </div> */}
 
           <div className="col-md-3">
             <label className="form-label">Unit*</label>
@@ -227,7 +233,7 @@ const AddProduct = () => {
               required
             />
           </div>
-
+{/* 
           <div className="col-md-3">
             <label className="form-label">Brand*</label>
             <input
@@ -238,27 +244,47 @@ const AddProduct = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div>
-            <div className="col-md-3">
+          </div> */}
+
+          <div className="row mt-4">
+            <div className="col-md-6">
               <label className="form-label">Select Category</label>
               <select
-                name="category"
-                id=""
+                name="mainCategory"
                 required
+                className="form-select"
                 onChange={handleChange}
-                value={formData.category}
+                value={formData.mainCategory}
               >
                 <option value="">Select Category</option>
                 {categoryList?.map((category) => (
                   <option key={category?._id} value={category?._id}>
-                    {category?.SubCategoryName}
+                    {category?.Parent_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-md-6">
+              <label className="form-label">Select Sub Category</label>
+              <select
+                name="category"
+                required
+                className="form-select"
+                onChange={handleChange}
+                value={formData.category}
+              >
+                <option value="">Select Sub Category</option>
+                {subcategoryList?.filter((category) => category.Parent_name._id === formData.mainCategory)?.map((subcategory) => (
+                  <option key={subcategory._id} value={subcategory._id}>
+                    {subcategory?.SubCategoryName}
                   </option>
                 ))}
               </select>
             </div>
           </div>
-          <div className="col-md-3">
+
+          {/* <div className="col-md-3">
             <label className="form-label">Expiry Date*</label>
             <input
               type="text"
@@ -300,7 +326,7 @@ const AddProduct = () => {
               <option value="Triple Door" />
               <option value="Four Door" />
             </datalist>
-          </div>
+          </div> */}
 
           {/* <div className="col-md-3">
             <label className="form-label">Select Type</label>
@@ -335,6 +361,13 @@ const AddProduct = () => {
             <JoditEditor
               value={formData.description}
               onChange={handleJoditChange}
+            />
+          </div>
+          <div className="col-md-12">
+            <label className="form-label">Product Details*</label>
+            <JoditEditor
+              value={formData.details}
+              onChange={handleJoditDetailsChange}
             />
           </div>
 
@@ -495,7 +528,7 @@ const AddProduct = () => {
                   }
                 />
                 <label className="form-check-label" htmlFor="featuredBooks">
-                  Featured Books
+                  Featured Products
                 </label>
               </div>
             </div>
@@ -514,7 +547,7 @@ const AddProduct = () => {
                   }
                 />
                 <label className="form-check-label" htmlFor="bestSellingBooks">
-                  Best Selling Books
+                  Best Selling Products
                 </label>
               </div>
             </div>

@@ -2,10 +2,17 @@ import { MainCategory } from "../models/mainCategory.model.js";
 
 export const createMainCategory = async (req, res) => {
   try {
-    const { Parent_name, Parent_id } = req.body || {};
+    const { Parent_name } = req.body || {};
     if (!Parent_name)
       return res.status(400).json({ error: "Parent name is required" });
-    const category = new MainCategory({ Parent_name, Parent_id });
+    const localPath = req.file?.filename;
+    if (!localPath) {
+      return res.status(400).json({ message: "Image is required" });
+    }
+    const category = new MainCategory({
+      Parent_name,
+      mainCategoryImage: localPath,
+    });
     await category.save();
     res.status(201).json(category);
   } catch (err) {
@@ -34,9 +41,16 @@ export const getMainCategoryById = async (req, res) => {
 
 export const updateMainCategory = async (req, res) => {
   try {
+    const updateData = {};
+    if (req.body?.Parent_name) {
+      updateData.Parent_name = req.body.Parent_name;
+    }
+    if (req.file?.filename) {
+      updateData.mainCategoryImage = req.file.filename;
+    }
     const category = await MainCategory.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
     if (!category) return res.status(404).json({ error: "Not found" });

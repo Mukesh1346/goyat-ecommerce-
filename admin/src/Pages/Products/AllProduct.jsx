@@ -42,6 +42,13 @@ const AllProduct = () => {
     }
   };
 
+  // Utility to strip HTML tags and return plain text
+  const extractText = (htmlString) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlString;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  };
+
   const handleDelete = async (productId) => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
@@ -232,8 +239,8 @@ const AllProduct = () => {
               <th>S No.</th>
               <th>Title</th>
               <th>Image</th>
-              <th>Key Features</th>
-              <th>Brand</th>
+              <th>Details</th>
+              <th>Unit</th>
               <th>New Arrival</th>
               <th>Featured</th>
               <th>Best Selling</th>
@@ -281,11 +288,15 @@ const AllProduct = () => {
                     />
                   </td>
                   <td>
-                    {product?.author?.length > 20
-                      ? product.author.slice(0, 20) + "..."
-                      : product.author}
+                    <p className="text-sm text-gray-700">
+                      {product?.details
+                        ? extractText(product.details).length > 20
+                          ? extractText(product.details).slice(0, 20) + "..."
+                          : extractText(product.details)
+                        : "N/A"}
+                    </p>
                   </td>
-                  <td>{product?.ISBN}</td>
+                  <td>{product?.pages}</td>
                   <td>
                     <input
                       type="checkbox"
