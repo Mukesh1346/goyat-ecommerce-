@@ -18,87 +18,88 @@ import testi9 from "../../Images/DowloadImage/testi9.jpg";
 import testi10 from "../../Images/DowloadImage/testi10.jpg";
 const Testimonial = () => {
   const testimonials = [
-    {
-      name: "Anjali Sharma",
-      rating: 4.5,
-      count: 58,
-      message:
-        "Amazing collection of academic and reference books. Fast delivery and great packaging!",
-      image: testi1,
-    },
-    {
-      name: "Priya Verma",
-      rating: 4,
-      count: 46,
-      message:
-        "I found all my engineering textbooks at discounted prices. Highly recommend this bookstore!",
-      image: testi2,
-    },
-    {
-      name: "Rani Mehra",
-      rating: 4.2,
-      count: 51,
-      message:
-        "Books are genuine and in perfect condition. A great place to shop for competitive exam prep.",
-      image: testi3,
-    },
-    {
-      name: "Sunita Rani",
-      rating: 3.8,
-      count: 39,
-      message:
-        "Delivery was a bit delayed, but the book quality and variety made up for it.",
-      image: testi4,
-    },
-    {
-      name: "Karan Patel",
-      rating: 4,
-      count: 44,
-      message:
-        "Wide range of subjects and latest editions available. My go-to for semester books.",
-      image: testi5,
-    },
-    {
-      name: "Meena Joshi",
-      rating: 4.7,
-      count: 62,
-      message:
-        "Love the quick service and amazing collection of medical and pharmacy books.",
-      image: testi6,
-    },
-    {
-      name: "Nikhil Das",
-      rating: 3.9,
-      count: 41,
-      message:
-        "Good stock of IT and coding books. Would love to see more regional language titles.",
-      image: testi7,
-    },
-    {
-      name: "Anjali Gupta",
-      rating: 4.6,
-      count: 59,
-      message:
-        "They had every book I needed for GATE preparation. Excellent discounts too!",
-      image: testi8,
-    },
-    {
-      name: "Rajesh Yadav",
-      rating: 4,
-      count: 50,
-      message:
-        "Customer support helped me track a rare book. Great service and trusted seller.",
-      image: testi9,
-    },
-    {
-      name: "Sneha Iyer",
-      rating: 3.5,
-      count: 36,
-      message:
-        "Good experience overall, but would appreciate faster delivery to smaller towns.",
-      image: testi10,
-    },
-  ];
+  {
+    name: "Anjali Sharma",
+    rating: 4.5,
+    count: 58,
+    message:
+      "Fresh vegetables and fruits delivered right to my doorstep. Great quality and service!",
+    image: testi1,
+  },
+  {
+    name: "Priya Verma",
+    rating: 4,
+    count: 46,
+    message:
+      "I always find the best deals on daily essentials. Highly recommend this grocery store!",
+    image: testi2,
+  },
+  {
+    name: "Rani Mehra",
+    rating: 4.2,
+    count: 51,
+    message:
+      "Groceries were well-packed and super fresh. Makes weekly shopping so easy.",
+    image: testi3,
+  },
+  {
+    name: "Sunita Rani",
+    rating: 3.8,
+    count: 39,
+    message:
+      "Delivery took a bit longer than expected, but everything was fresh and neatly packed.",
+    image: testi4,
+  },
+  {
+    name: "Karan Patel",
+    rating: 4,
+    count: 44,
+    message:
+      "Great variety of kitchen staples and snacks. My go-to for monthly grocery shopping.",
+    image: testi5,
+  },
+  {
+    name: "Meena Joshi",
+    rating: 4.7,
+    count: 62,
+    message:
+      "Loved the quality of dairy and bakery items. Fast delivery and well-maintained packaging.",
+    image: testi6,
+  },
+  {
+    name: "Nikhil Das",
+    rating: 3.9,
+    count: 41,
+    message:
+      "Good stock of organic items and health foods. Would love to see more local brands.",
+    image: testi7,
+  },
+  {
+    name: "Anjali Gupta",
+    rating: 4.6,
+    count: 59,
+    message:
+      "Found all the grocery items I needed in one place. Amazing discounts on combos too!",
+    image: testi8,
+  },
+  {
+    name: "Rajesh Yadav",
+    rating: 4,
+    count: 50,
+    message:
+      "Customer support helped me with a refund issue smoothly. Very professional team.",
+    image: testi9,
+  },
+  {
+    name: "Sneha Iyer",
+    rating: 3.5,
+    count: 36,
+    message:
+      "Overall good experience, but would appreciate more delivery slots for remote areas.",
+    image: testi10,
+  },
+];
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-4">

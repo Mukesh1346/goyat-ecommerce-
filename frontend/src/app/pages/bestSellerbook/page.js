@@ -18,7 +18,7 @@ const page = () => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
           <h2 className="text-white text-2xl md:text-4xl font-bold">
-            Best Selling Books
+            Best Selling Products
           </h2>
         </div>
       </div>

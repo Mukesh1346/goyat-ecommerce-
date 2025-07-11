@@ -158,7 +158,7 @@ const BestSeller = ({ productlength = 4, btnlength = 8 }) => {
       <div className="flex justify-between items-center mb-4">
         <div>
           <h2 className="text-xl font-bold text-gray-800">
-            Best Selling Books
+            Best Selling Products
           </h2>
           <p className="text-sm max-w-48 md:max-w-full text-gray-500">
             Explore our top-selling titles this month at Goyat Trading

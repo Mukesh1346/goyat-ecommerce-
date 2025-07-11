@@ -127,7 +127,7 @@ const apiCartCount = useSelector((state) => state.apiCart.items?.length);
             </button>
             <input
               type="text"
-              placeholder="Search books..."
+              placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-3 py-2 border border-purple-700 text-black rounded-full focus:outline-none"

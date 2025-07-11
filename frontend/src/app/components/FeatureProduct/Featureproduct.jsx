@@ -156,7 +156,7 @@ const Featureproduct = ({ productlength = 4, btnlength = 8 }) => {
         <div>
           <h2 className="text-xl font-bold text-gray-800">Featured Products</h2>
           <p className="text-sm max-w-48 md:max-w-full text-gray-500">
-            Discover the most popular books of the month at GOYAT TRADING
+            Discover the most popular products of the month at GOYAT TRADING
           </p>
         </div>
         {pathname !== "/pages/featurebook" && (

@@ -58,7 +58,7 @@ export default function AllSubCategory() {
             Shop by {subCategories[0]?.Parent_name?.Parent_name}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover our wide range of books across different SubCategories
+           Discover our wide range of groceries across different subcategories — from fresh produce to daily essentials!
           </p>
         </div>
 
