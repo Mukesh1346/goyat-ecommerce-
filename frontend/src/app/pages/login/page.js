@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "@/app/redux/features/auth/loginSlice";
 import toast from "react-hot-toast";
 import { Eye, EyeOff, Mail } from "lucide-react";
-import stylebanner from "../../Images/DBS/BOOKSTOREBANNER.jpg";
+import stylebanner from "../../Images/DBS/stylebanner.webp";
 import Link from "next/link";
 import Image from "next/image";
 import {

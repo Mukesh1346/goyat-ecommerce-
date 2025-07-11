@@ -85,7 +85,7 @@ const Contact = () => {
               </div>
               <h3 className="text-lg font-semibold">GOYAT TRADING</h3>
               <p className="text-gray-600">
-                19, Ansari Rd, Daryaganj, New Delhi, Delhi, 110002
+                VASANT VIHAR PHASE NO. 1, HIMMATGARH DHAKOLI, Punjab, India
               </p>
               <p className="font-medium mt-1">+91 8283863884</p>
               <p className="text-sm mb-2">info@goyattrading.shop</p>

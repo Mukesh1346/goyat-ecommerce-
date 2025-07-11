@@ -8,7 +8,7 @@ import ReduxProvider from "./redux/ReduxProvider";
 import AppLayout from "./AppLayout";
 export const metadata = {
   title: "GOYAT TRADING",
-  description: "Create by Vishnu",
+  description: "Create by Vishnu & Nitin",
 };
 
 export default function RootLayout({ children }) {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Mail } from "lucide-react";
-import stylebanner from "../../../Images/DBS/BOOKSTOREBANNER.jpg";
+import stylebanner from "../../../Images/DBS/stylebanner.webp";
 import toast from "react-hot-toast";
 import axiosInstance from "@/app/redux/features/axiosInstance";
 const Page = () => {
