@@ -86,7 +86,7 @@ export default function AllSubCategory() {
               </div>
 
               {/* Category Name */}
-              <div className="p-4">
+              <div className="p-4 bg-green-500 bg-opacity-80 rounded-b-lg">
                 <h3 className="text-sm md:text-md font-semibold text-white text-center">
                   {category.SubCategoryName}
                 </h3>
