@@ -1,6 +1,6 @@
 "use client";
 import { use, useEffect, useState } from "react";
-import stylebanner from "../../Images/DBS/BOOKSTOREBANNER.jpg";
+import stylebanner from "../../Images/DBS/stylebanner.webp";
 
 import Image from "next/image";
 import Link from "next/link";

@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["res.cloudinary.com", "localhost", "picsum.photos", "api.iscindiasales.co.in", "https://", "http://", "https://api.iscindiasales.co.in/"],
+    domains: [
+      "res.cloudinary.com",
+      "localhost",
+      "picsum.photos",
+      "api.goyattrading.shop",
+      "https://",
+      "http://",
+    ],
   },
 };
 

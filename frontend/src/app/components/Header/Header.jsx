@@ -96,7 +96,13 @@ const Header = () => {
     } 
   }, [user]);
   
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
+  if (!hasMounted) return null;
+
+  
   if (error) {
     return (
       <div className="text-center py-6 text-red-500">
@@ -105,11 +111,7 @@ const Header = () => {
     );
   }
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
-  if (!hasMounted) return null;
 
   return (
     <>
@@ -412,7 +414,7 @@ const Header = () => {
                   { label: "Home", url: "/" },
                   { label: "Shop Items", url: "/pages/shop" },
                   { label: "All Categories", url: "/pages/categories" },
-                  { label: "Featured Items", url: "/pages/featurebook" },
+                  { label: "Featured Products", url: "/pages/featurebook" },
                   { label: "Best Sellers", url: "/pages/bestSellerbook" },
                   { label: "Contact Us", url: "/pages/contact" },
                   { label: "About Us", url: "/pages/about" },
@@ -505,7 +507,7 @@ const Header = () => {
                 href="/pages/featurebook"
                 onClick={() => setIsSidebarOpen(false)}
               >
-                Featured Books
+                Featured Products
               </Link>
             </li>
             <li className="border-b-1 border-gray-300 font-medium">
@@ -522,13 +524,13 @@ const Header = () => {
               </Link>
             </li> */}
 
-            <li className="border-b-1 border-gray-300 font-medium">
+            {/* <li className="border-b-1 border-gray-300 font-medium">
               <a href="/DBSCatalog.pdf" download={true}>
                 <button className="green hover:bg-purple-700 text-white font-medium py-2 px-3.5">
                   Download Catalogue
                 </button>
               </a>{" "}
-            </li>
+            </li> */}
           </ul>
           <div className="mt-4">
             <p className="font-bold text-gray-400">Category</p>

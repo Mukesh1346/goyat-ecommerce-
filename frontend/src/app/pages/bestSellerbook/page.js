@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Image1 from "../../Images/DBS/BOOKSTOREBANNER.jpg";
+import Image1 from "../../Images/DBS/stylebanner.webp";
 import BestSeller from "@/app/components/BestSeller/BestSeller";
 const page = () => {
   return (

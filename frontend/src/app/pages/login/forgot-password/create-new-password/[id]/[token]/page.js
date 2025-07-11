@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Lock } from "lucide-react";
-import stylebanner from "../../../../../../Images/DBS/BOOKSTOREBANNER.jpg";
+import stylebanner from "../../../../../../Images/DBS/stylebanner.webp";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import axiosInstance from "@/app/redux/features/axiosInstance";
