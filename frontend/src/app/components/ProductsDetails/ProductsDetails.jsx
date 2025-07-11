@@ -211,7 +211,7 @@ export default function ProductDetails() {
           className="flex items-center text-gray-500 hover:text-gray-900 transition-colors"
         >
           <ChevronsLeft />
-          Back to Books
+          Back to Products
         </Link>
       </div>
 
